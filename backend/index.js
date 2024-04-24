@@ -13,7 +13,8 @@ app.get('/', (req, res) => {
     res.send("Hello World 🙂");
 });
 
-
+const taskRoutes = require('./task.routes');
+app.use('/api/task', taskRoutes);
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
