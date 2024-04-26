@@ -11,7 +11,7 @@ const createTask = (req, res) => {
     };
 
     if (!title || !description) {
-        return res.status(400).json({ error: true, message: "Please provide both title and description" });
+        return res.status(400).json({ error: true, message: "Please provide both Title and Description" });
     }
 
     dbConnection.query("INSERT INTO tasks SET ?", newTask, function (err, result) {
@@ -34,13 +34,13 @@ const updateTask = (req, res) => {
     const { title, description } = req.body;
 
     if (!title || !description) {
-        return res.status(400).json({ error: true, message: "Please provide both title and description" });
+        return res.status(400).json({ error: true, message: "Please provide both Title and Description" });
     }
 
     dbConnection.query("UPDATE tasks SET title=?, description=? WHERE id=?", [title, description, taskId], function (err, result) {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: true, message: "Failed to update task" });
+            return res.status(500).json({ error: true, message: "Update Task Failed" });
         }
         return res.status(200).json({
             error: false,
@@ -50,6 +50,37 @@ const updateTask = (req, res) => {
     });
 }
 
+const startTask = (req, res) => {
+    const taskId = req.params.id;
+
+    dbConnection.query("UPDATE tasks SET status=? WHERE id=?", ["ONGOING", taskId], function (err, result) {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: true, message: "Task Failed to Start" });
+        }
+        return res.status(200).json({
+            error: false,
+            message: "Task started successfully",
+            status: 200
+        });
+    });
+}
+
+const finishTask = (req, res) => {
+    const taskId = req.params.id;
+
+    dbConnection.query("UPDATE tasks SET status=? WHERE id=?", ["COMPLETED", taskId], function (err, result) {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: true, message: "Task Failed to End" });
+        }
+        return res.status(200).json({
+            error: false,
+            message: "Task ended successfully",
+            status: 200
+        });
+    });
+}
 
 const deleteTask = (req, res) => {
     const taskId = req.params.id;
@@ -123,5 +154,7 @@ module.exports = {
     deleteTask,
     retrieveAllTasks,
     retrieveTaskByTitle,
-    retrieveTaskById
+    retrieveTaskById,
+    startTask,
+    finishTask
 }
