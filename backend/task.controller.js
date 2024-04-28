@@ -114,10 +114,27 @@ const retrieveAllTasks = (req, res) => {
     });
 };
 
+const retrieveTaskByStatus = (req, res) => {
+    const taskStatus = req.params.input
+
+    dbConnection.query("SELECT * FROM tasks WHERE status=?", [taskStatus], function (err, task) {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+            console.log(task);
+            res.status(200).send({
+                status: 200,
+                data: task
+            });
+        }
+    });
+}
+
 const retrieveTaskByTitle = (req, res) => {
     const taskTitle = req.params.input
 
-    dbConnection.query("SELECT * FROM tasks WHERE title =?", [taskTitle], function (err, task) {
+    dbConnection.query("SELECT * FROM tasks WHERE title=?", [taskTitle], function (err, task) {
         if (err) {
             console.log(err);
             res.status(500).send(err);
@@ -155,6 +172,7 @@ module.exports = {
     retrieveAllTasks,
     retrieveTaskByTitle,
     retrieveTaskById,
+    retrieveTaskByStatus,
     startTask,
     finishTask
 }
