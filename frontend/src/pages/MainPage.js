@@ -35,6 +35,12 @@ export default function Tasks(){
 
     return(
         <>
+            <button>Create Contact</button>
+            
+            <form class="example" action="/action_page.php">
+                <input type="text" placeholder="Enter Contact" name="search"></input>
+                 <button type="submit">Hello</button>
+            </form>
             <TableContainer sx={{ padding: 10 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
