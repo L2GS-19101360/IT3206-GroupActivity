@@ -4,7 +4,7 @@ import './App.css';
 import Tasks from './pages/MainPage';
 
 import './App.css';
-import NavigationBar from './Components/Navbar'
+import NavigationBar from './components/Navbar'
 import { DataGrid } from '@mui/x-data-grid';
 
 
