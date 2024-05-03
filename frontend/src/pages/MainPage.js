@@ -7,17 +7,21 @@ import TableHead from '@mui/material/TableHead';
 import Button from '@mui/material/Button';
 import axios from 'axios'
 import TableRow from '@mui/material/TableRow';
+
 import AddTask from './CreateTask'
+
 
 export default function Tasks() {
 
     const [taskArray, setTaskArray] = useState([]);
+
     const [openUpdateForm, setOpenUpdateForm] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const [updatedTaskData, setUpdatedTaskData] = useState({
         title: "",
         description: ""
     });
+
 
     const fetchTask = async () => {
         try {
@@ -76,6 +80,7 @@ export default function Tasks() {
         );
     }
 
+
     const handleOpenUpdateForm = (task) => {
         setOpenUpdateForm(true);
         setSelectedTask(task);
@@ -105,6 +110,9 @@ export default function Tasks() {
         }
     };
 
+    console.log(taskArray)
+
+
     const columns = [
         {
             id: 'title',
@@ -121,6 +129,7 @@ export default function Tasks() {
         {
             id: 'action',
             label: 'Actions'
+
         },
         {
             id: 'update',
@@ -134,7 +143,9 @@ export default function Tasks() {
 
     return (
         <>
+
         <AddTask/>
+
             <TableContainer sx={{ padding: 10 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -162,7 +173,9 @@ export default function Tasks() {
                                     )}
                                 </TableCell>
                                 <TableCell style={{ maxWidth: "10px" }}>
+
                                     <Button variant="contained" style={{ backgroundColor: 'orange', color: 'white' }} onClick={() => handleOpenUpdateForm(task)}>Update Task</Button>
+
                                 </TableCell>
                                 <TableCell style={{ maxWidth: "10px" }} onClick={() => deleteTask(task.id)}><Button variant='contained' color='error'>Delete</Button></TableCell>
                             </TableRow>
@@ -170,6 +183,7 @@ export default function Tasks() {
                     </TableBody>
                 </Table>
             </TableContainer>
+
 
             {openUpdateForm && (
                 <div className="update-form">
@@ -192,3 +206,4 @@ export default function Tasks() {
         </>
     )
 }
+
