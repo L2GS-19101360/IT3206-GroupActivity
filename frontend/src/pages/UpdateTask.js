@@ -11,9 +11,8 @@ export default function UpdateTask({ taskId, isOpen, onClose }) {
     const [oldDesc, setOldDesc] = useState('');
     
     useEffect(() => {
-        
         fetchTask();
-    }, [taskId]);
+    }, []);
 
     const fetchTask = async () => {
         try {
@@ -21,7 +20,6 @@ export default function UpdateTask({ taskId, isOpen, onClose }) {
             const oldData = response.data; 
             setOldTitle(oldData.title);
             setOldDesc(oldData.description);
-            
         } catch (error) {
             console.log(error);
         }

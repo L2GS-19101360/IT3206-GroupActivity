@@ -7,16 +7,15 @@ import TableHead from '@mui/material/TableHead';
 import Button from '@mui/material/Button';
 import axios from 'axios'
 import TableRow from '@mui/material/TableRow';
-
 import AddTask from './CreateTask'
-import UpdateTask from './UpdateTask'; 
+import UpdateTask from './UpdateTask'
 
 export default function Tasks() {
 
     const [taskArray, setTaskArray] = useState([]);
-    const [openUpdateForm, setOpenUpdateForm] = useState(false);
-    const [selectedTask, setSelectedTask] = useState(null);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
+
     const fetchTask = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/tasks/');
@@ -74,7 +73,6 @@ export default function Tasks() {
         );
     }
 
-
      const handleOpenUpdateModal = (task) => {
         setSelectedTask(task);
         setIsUpdateModalOpen(true);
@@ -85,9 +83,6 @@ export default function Tasks() {
         setSelectedTask(null);
         setIsUpdateModalOpen(false);
     };
-
-    console.log(taskArray)
-
 
     const columns = [
         {
@@ -105,7 +100,6 @@ export default function Tasks() {
         {
             id: 'action',
             label: 'Actions'
-
         },
         {
             id: 'update',
@@ -119,9 +113,7 @@ export default function Tasks() {
 
     return (
         <>
-
         <AddTask/>
-
             <TableContainer sx={{ padding: 10 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -149,7 +141,7 @@ export default function Tasks() {
                                     )}
                                 </TableCell>
                                 <TableCell style={{ maxWidth: "10px" }}>
-                                <Button variant="contained" style={{ backgroundColor: 'orange', color: 'white' }} onClick={() => handleOpenUpdateModal(task)}>Update Task</Button>
+                                    <Button variant="contained" style={{ backgroundColor: 'orange', color: 'white' }} onClick={() => handleOpenUpdateModal(task)}>Update Task</Button>
                                 </TableCell>
                                 <TableCell style={{ maxWidth: "10px" }} onClick={() => deleteTask(task.id)}><Button variant='contained' color='error'>Delete</Button></TableCell>
                             </TableRow>
@@ -158,9 +150,7 @@ export default function Tasks() {
                 </Table>
             </TableContainer>
 
-
             <UpdateTask taskId={selectedTask ? selectedTask.id : null} isOpen={isUpdateModalOpen} onClose={handleCloseUpdateModal} />
         </>
     )
 }
-

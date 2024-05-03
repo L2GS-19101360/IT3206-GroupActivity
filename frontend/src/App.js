@@ -12,13 +12,12 @@ import { DataGrid } from '@mui/x-data-grid';
 function App() {
   return (
 
-    <div className="App">
-  <NavigationBar />
+    <>
+      <NavigationBar />
       <Tasks />
-    </div>
-  );
+    </>
+  )
 
- 
 }
 
 export default App;
