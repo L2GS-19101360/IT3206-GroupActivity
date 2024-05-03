@@ -1,5 +1,5 @@
 import './App.css';
-import NavigationBar from './components/Navbar'
+import NavigationBar from './Components/Navbar'
 import { DataGrid } from '@mui/x-data-grid';
 
 
