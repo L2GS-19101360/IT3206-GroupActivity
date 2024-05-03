@@ -1,13 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
-import Tasks from './pages/MainPage';
+import NavigationBar from './components/Navbar'
+import { DataGrid } from '@mui/x-data-grid';
+
 
 function App() {
   return (
-    <div className="App">
-      <Tasks />
-    </div>
-  );
+    <>
+      <NavigationBar />
+      <div className='main-container'>
+
+      </div>
+    </>
+  )
 }
 
 export default App;
