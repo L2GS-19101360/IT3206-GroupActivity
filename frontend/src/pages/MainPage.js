@@ -4,6 +4,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
+import Button from '@mui/material/Button';
 
 import TableRow from '@mui/material/TableRow';
 
@@ -22,6 +23,11 @@ export default function Tasks(){
         {
             id: 'progress',
             label: 'Progress'
+        },
+        {
+            id: 'action',
+            label: 'Actions'
+
         }
     ];
 
@@ -35,11 +41,13 @@ export default function Tasks(){
 
     return(
         <>
+
             <button>Create Contact</button>
             <form class="example" action="/action_page.php">
                 <input type="text" placeholder="Enter Contact" name="search"></input>
                  <button type="submit">Hello</button>
             </form>
+      
             <TableContainer sx={{ padding: 10 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -57,6 +65,9 @@ export default function Tasks(){
                                 <TableCell>{row.title}</TableCell>
                                 <TableCell>{row.desc}</TableCell>
                                 <TableCell>{row.status}</TableCell>
+
+                                <TableCell><Button variant='contained'>Info</Button></TableCell>
+
                             </TableRow>
                         ))}
                     </TableBody>
