@@ -9,17 +9,14 @@ import axios from 'axios'
 import TableRow from '@mui/material/TableRow';
 
 import AddTask from './CreateTask'
+import UpdateTask from './UpdateTask'; 
 
 export default function Tasks() {
 
     const [taskArray, setTaskArray] = useState([]);
     const [openUpdateForm, setOpenUpdateForm] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
-    const [updatedTaskData, setUpdatedTaskData] = useState({
-        title: "",
-        description: ""
-    });
-
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const fetchTask = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/tasks/');
@@ -152,7 +149,7 @@ export default function Tasks() {
                                     )}
                                 </TableCell>
                                 <TableCell style={{ maxWidth: "10px" }}>
-                                    <Button variant="contained" style={{ backgroundColor: 'orange', color: 'white' }} onClick={() => handleOpenUpdateForm(task)}>Update Task</Button>
+                                <Button variant="contained" style={{ backgroundColor: 'orange', color: 'white' }} onClick={() => handleOpenUpdateModal(task)}>Update Task</Button>
                                 </TableCell>
                                 <TableCell style={{ maxWidth: "10px" }} onClick={() => deleteTask(task.id)}><Button variant='contained' color='error'>Delete</Button></TableCell>
                             </TableRow>
