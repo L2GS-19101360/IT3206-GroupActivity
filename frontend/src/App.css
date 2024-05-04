@@ -1,17 +1,23 @@
 body {
-  font-family: 'Roboto';
+  font-family: Roboto;
 }
 
 h3 {
   font-size: 30px;
   font-family: OCR A Std, monospace;
   color: #015901;
+  font-weight: bold;
 }
 
 .main-container {
   display: block;
-  margin-top: 20%;
-  background-color: red;
+  padding: 80px;
+  padding-top: 40px;
+  /* background-color: red; */
+}
+
+.header h2 {
+  font-family: OCR A Std, monospace;
 }
 
 .navbar {
@@ -48,4 +54,38 @@ h3 {
   font-size: 20px;
   font-family: OCR A Std, monospace;
   color: #015901;
+}
+
+.action-bar {
+  display: flex;
+  flex-direction: row;
+  margin-top: 4px;
+}
+
+.action-button {
+  flex-direction: row;
+  margin-bottom: 0;
+}
+
+.modal-header {
+  display: flex;
+}
+
+.modal-header h2 {
+  font-size: 26px;
+  font-weight: bold;
+  font-family: OCR A Std, monospace;
+  color: #015901;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-content text {
+  font-size: 20px;
+  font-family: Roboto;
+  letter-spacing: 1.5px;
 }
