@@ -52,7 +52,9 @@ function MembersModal({ open, close }) {
           <text>Ng, James Winston</text>
           <text>Oblina, Nicholai Julian</text>
           <text>Silverio, Gerald</text>
-          <text>Suico, Lorenz</text>
+          <text>Suico, Lorenz Gil</text>
+          <text>Dano, Allen Louie</text>
+          <text>Noob, Clyde Joseph</text>
         </div>
       </Sheet>
     </Modal>
