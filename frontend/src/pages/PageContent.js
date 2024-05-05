@@ -10,6 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import UpdateTask from './UpdateTask';
 import Header from '../components/Header';
 import ActionBar from '../components/ActionBar';
+import SearchBar from '../components/SearchBar';
+import SeachBar from '../components/SearchBar';
 
 export default function PageContent() {
   const [taskArray, setTaskArray] = useState([]);
@@ -105,7 +107,9 @@ export default function PageContent() {
     <>
       <div className='main-container'>
         <Header />
+        <SearchBar />
         <ActionBar />
+
         <TableContainer>
           <Table stickyHeader aria-label='sticky table'>
             <TableHead>
@@ -116,7 +120,7 @@ export default function PageContent() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {taskArray.map((task) => (
+              {filteredTasks.map((task) => (
                 <TableRow key={task.id}>
                   <TableCell style={{ maxWidth: '50px' }}>
                     {task.title}
