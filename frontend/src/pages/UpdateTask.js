@@ -1,8 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-
 
 export default function UpdateTask({ taskId, isOpen, onClose }) {
     const [updatedTitle, setUpdatedTitle] = useState('');
@@ -10,11 +9,7 @@ export default function UpdateTask({ taskId, isOpen, onClose }) {
     const [oldTitle, setOldTitle] = useState('');
     const [oldDesc, setOldDesc] = useState('');
     
-    useEffect(() => {
-        fetchTask();
-    }, []);
-
-    const fetchTask = async () => {
+    const fetchTask = useCallback(async () => {
         try {
             const response = await axios.get(`http://localhost:8080/api/tasks/${taskId}`);
             const oldData = response.data; 
@@ -23,7 +18,11 @@ export default function UpdateTask({ taskId, isOpen, onClose }) {
         } catch (error) {
             console.log(error);
         }
-    };
+    }, [taskId]);
+
+    useEffect(() => {
+        fetchTask();
+    }, [fetchTask]);
 
     const handleUpdate = async () => {
         try {

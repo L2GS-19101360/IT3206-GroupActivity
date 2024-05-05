@@ -2,6 +2,28 @@ const express = require('express');
 const db = require('./db.config');
 const dbConnection = require('./db.config');
 
+const deleteMultipleTasksByIds = (req, res) => {
+    const taskIdArray = req.body.taskIds;
+
+    if (!taskIdArray || !Array.isArray(taskIdArray) || taskIdArray.length === 0) {
+        return res.status(400).json({ error: true, message: "Please provide an array of task IDs" });
+    }
+
+    const placeholders = taskIdArray.map(() => '?').join(',');
+
+    dbConnection.query(`DELETE FROM tasks WHERE id IN (${placeholders})`, taskIdArray, function(err, result) {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        }
+        return res.status(200).json({
+            error: false,
+            message: "Selected Tasks deleted successfully",
+            status: 200
+        });
+    });
+}
+
 const createTask = (req, res) => {
     const { title, description, stat } = req.body;
 
@@ -174,5 +196,6 @@ module.exports = {
     retrieveTaskById,
     retrieveTaskByStatus,
     startTask,
-    finishTask
+    finishTask,
+    deleteMultipleTasksByIds
 }
