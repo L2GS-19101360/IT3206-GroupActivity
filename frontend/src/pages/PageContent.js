@@ -103,6 +103,8 @@ export default function PageContent() {
     },
   ];
 
+  const filteredTasks = taskArray.filter((task) => task.ti)
+
   return (
     <>
       <div className='main-container'>
@@ -120,7 +122,7 @@ export default function PageContent() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredTasks.map((task) => (
+              {taskArray.map((task) => (
                 <TableRow key={task.id}>
                   <TableCell style={{ maxWidth: '50px' }}>
                     {task.title}

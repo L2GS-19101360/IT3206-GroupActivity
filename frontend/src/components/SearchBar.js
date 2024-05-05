@@ -8,7 +8,7 @@ export default function SearchBar() {
     setSearchTerm(event.target.value);
   };
   
-  const filteredTasks = taskArray.filter((task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()));
+//   const filteredTasks = taskArray.filter((task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
 
   return (
