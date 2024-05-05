@@ -80,6 +80,7 @@ function InputModal({ open, close, setRerender }) {
         setDescription('');
         console.log('Task created successfully');
         setRerender(prev => !prev);
+        close();
     } catch (error) {
         console.error('Error creating task:', error);
     }
@@ -95,12 +96,6 @@ function InputModal({ open, close, setRerender }) {
         <div className='modal-content'>
           <text>Fill out the necessary details for this task.</text>
         </div>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            close();
-          }}
-        >
           <Stack spacing={3} mt={1}>
             <TextField
               label='Task Name'
@@ -116,11 +111,10 @@ function InputModal({ open, close, setRerender }) {
               onChange={(newDesc) => setDescription(newDesc.target.value)}
               required
             />
-            <Button variant='contained' type='submit' onClick={handleSubmit} sx={modalButtonStyle}>
+            <Button variant='contained' onClick={handleSubmit} sx={modalButtonStyle}>
               Submit
             </Button>
           </Stack>
-        </form>
       </ModalDialog>
     </Modal>
   );
