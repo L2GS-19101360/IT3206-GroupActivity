@@ -103,7 +103,7 @@ export default function PageContent() {
     },
   ];
 
-  const filteredTasks = taskArray.filter((task) => task.ti)
+  //const filteredTasks = taskArray.filter((task) => task.ti)
 
   return (
     <>

@@ -7,9 +7,6 @@ export default function SearchBar() {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-  
-//   const filteredTasks = taskArray.filter((task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()));
-
 
   return (
     <div className="search-bar">
@@ -19,6 +16,7 @@ export default function SearchBar() {
         variant="standard"
         value={searchTerm}
         onChange={handleSearch}
+        
       />
       <Button variant="contained" style={{ backgroundColor: "#015901" }} onClick={() => handleSearch()}>
         Search
