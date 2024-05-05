@@ -1,17 +1,17 @@
 import '../App.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { RiDeleteBinLine } from 'react-icons/ri';
 import ModalClose from '@mui/joy/ModalClose';
 import Modal from '@mui/joy/Modal';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/joy/Stack';
 import ModalDialog from '@mui/joy/ModalDialog';
 import { Divider, Button } from '@mui/material';
+import { RiDeleteBinLine } from 'react-icons/ri';
 import { MdAddCircleOutline } from 'react-icons/md';
 import { FiEdit3 } from 'react-icons/fi';
 
-export default function ActionBar({ selected }) {
+export default function ActionBar({ selected, setRerender }) {
   const [inputModal, showInputModal] = useState(false);
 
   return (
@@ -61,25 +61,26 @@ export default function ActionBar({ selected }) {
         sx={{ opacity: '1', paddingVertical: '4px', marginBottom: '6px' }}
       />
       {/* Input Modal */}
-      <InputModal open={inputModal} close={() => showInputModal(false)} />
+      <InputModal open={inputModal} close={() => showInputModal(false)} setRerender={setRerender} />
     </>
   );
 }
 
-function InputModal({ open, close }) {
+function InputModal({ open, close, setRerender }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = async () => {
     try {
-        await axios.post('http://localhost:8080/api/tasks', {
+        const response = await axios.post('http://localhost:8080/api/tasks', {
             title: title,
             description: description
         });
         setTitle('');
         setDescription('');
         console.log('Task created successfully');
-        window.location.reload();
+        setRerender(prev => !prev);
+        close();
     } catch (error) {
         console.error('Error creating task:', error);
     }
@@ -95,12 +96,6 @@ function InputModal({ open, close }) {
         <div className='modal-content'>
           <text>Fill out the necessary details for this task.</text>
         </div>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            close();
-          }}
-        >
           <Stack spacing={3} mt={1}>
             <TextField
               label='Task Name'
@@ -116,11 +111,10 @@ function InputModal({ open, close }) {
               onChange={(newDesc) => setDescription(newDesc.target.value)}
               required
             />
-            <Button variant='contained' type='submit' onClick={handleSubmit} sx={modalButtonStyle}>
+            <Button variant='contained' onClick={handleSubmit} sx={modalButtonStyle}>
               Submit
             </Button>
           </Stack>
-        </form>
       </ModalDialog>
     </Modal>
   );
