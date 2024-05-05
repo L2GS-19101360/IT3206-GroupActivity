@@ -123,10 +123,11 @@ export default function PageContent() {
             variant="standard"
             value={searchTerm}
             onChange={handleSearch}
+            style={{ width: '1000px' }}
           />
-          <Button variant="contained" style={{ backgroundColor: "#015901" }} onClick={() => handleSearch()}>
+          {/* <Button variant="contained" style={{ backgroundColor: "#015901" }} onClick={() => handleSearch()}>
             Search
-          </Button>
+          </Button> */}
         </div>
         
         <ActionBar />
