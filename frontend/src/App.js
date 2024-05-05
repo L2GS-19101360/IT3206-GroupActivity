@@ -1,14 +1,13 @@
 import './App.css';
-import PageContent from './pages/PageContent';
+import TaskList from './components/TaskList';
 import './App.css';
 import NavigationBar from './components/Navbar'
-// import { DataGrid } from '@mui/x-data-grid';
 
 function App() {
   return (
     <>
       <NavigationBar />
-      <PageContent />
+      <TaskList />
     </>
   )
 
