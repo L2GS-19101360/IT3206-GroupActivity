@@ -10,13 +10,14 @@ import TableRow from '@mui/material/TableRow';
 import UpdateTask from './UpdateTask';
 import Header from '../components/Header';
 import ActionBar from '../components/ActionBar';
-import SearchBar from '../components/SearchBar';
-import SeachBar from '../components/SearchBar';
+import { TextField } from "@mui/material";
 
 export default function PageContent() {
   const [taskArray, setTaskArray] = useState([]);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [searchTerm, setSearchTerm] = React.useState(""); 
+
 
   const fetchTask = async () => {
     try {
@@ -103,13 +104,32 @@ export default function PageContent() {
     },
   ];
 
-  //const filteredTasks = taskArray.filter((task) => task.ti)
+  
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
+  const filteredTasks = taskArray.filter((task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  
   return (
     <>
       <div className='main-container'>
         <Header />
-        <SearchBar />
+
+        <div className="search-bar">
+          <TextField
+            id="standard-basic"
+            label="Search"
+            variant="standard"
+            value={searchTerm}
+            onChange={handleSearch}
+            style={{ width: '1000px' }}
+          />
+          {/* <Button variant="contained" style={{ backgroundColor: "#015901" }} onClick={() => handleSearch()}>
+            Search
+          </Button> */}
+        </div>
+        
         <ActionBar />
 
         <TableContainer>
@@ -122,7 +142,7 @@ export default function PageContent() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {taskArray.map((task) => (
+              {filteredTasks.map((task) => (
                 <TableRow key={task.id}>
                   <TableCell style={{ maxWidth: '50px' }}>
                     {task.title}
