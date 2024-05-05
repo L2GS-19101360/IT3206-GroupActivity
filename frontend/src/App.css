@@ -10,10 +10,15 @@ h3 {
 }
 
 .main-container {
-  display: block;
+  display: flex;
+  flex-direction: column;
   padding: 80px;
   padding-top: 40px;
-  /* background-color: red; */
+}
+
+.header {
+  display: flex;
+  margin-bottom: 0;
 }
 
 .header h2 {
@@ -22,13 +27,13 @@ h3 {
 
 .navbar {
   display: flex;
+  position: sticky;
   align-items: center;
   flex-direction: row;
   background-color: #77DD77;
   box-shadow: 4px 2px 2px #0000;
   width: 100%;
   min-height: 10%;
-  position: absolute;
   top: 0;
   z-index: 1000;
 }
@@ -59,7 +64,7 @@ h3 {
 .action-bar {
   display: flex;
   flex-direction: row;
-  margin-top: 4px;
+  margin-top: 0;
 }
 
 .action-button {
@@ -88,4 +93,11 @@ h3 {
   font-size: 20px;
   font-family: Roboto;
   letter-spacing: 1.5px;
+}
+
+.table-header {
+  background-color:#77DD77; 
+  color: #015901; 
+  font-weight: bold; 
+  border-bottom: 2px solid #ccc;
 }
