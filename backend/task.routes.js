@@ -11,5 +11,6 @@ router.get('/taskTitle/:input', taskController.retrieveTaskByTitle);
 router.get('/taskId/:id', taskController.retrieveTaskById);
 router.put('/startTask/:id', taskController.startTask);
 router.put('/finishTask/:id', taskController.finishTask)
+router.post('/deleteMultipleTasks', taskController.deleteMultipleTasksByIds)
 
 module.exports = router
