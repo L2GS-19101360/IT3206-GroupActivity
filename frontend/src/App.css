@@ -18,10 +18,13 @@ h3 {
 
 .header {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-bottom: 0;
 }
 
 .header h2 {
+  font-size: 30px;
   font-family: OCR A Std, monospace;
 }
 
@@ -56,7 +59,7 @@ h3 {
 }
 
 .navbar-item {
-  font-size: 20px;
+  font-size: 26px;
   font-family: OCR A Std, monospace;
   color: #015901;
 }
