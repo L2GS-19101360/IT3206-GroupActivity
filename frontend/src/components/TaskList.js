@@ -72,7 +72,16 @@ function TaskTable({ tasks, selected, setSelected, setRerender }) {
       minWidth: 400,
       headerAlign: 'center',
       fontWeight: 'bold',
+      renderCell: (params) => {
+        const task = params.row;
+        return (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', fontFamily: 'OCR A Std, monospace' }}>
+            {task.status}
+          </div>
+        );
+      }
     },
+
     {
       field: 'action',
       headerName: 'Task Action',
@@ -82,11 +91,11 @@ function TaskTable({ tasks, selected, setSelected, setRerender }) {
       renderCell: (params) => {
         const task = params.row;
         return (
-          <div>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             {task.status === 'PENDING' ? (
               <Button
                 variant='contained'
-                sx={{ minWidth: '80px' }}
+                sx={{ minWidth: '200px', fontFamily: 'OCR A Std, monospace' }}
                 color='success'
                 onClick={() => startTask(task.id)}
               >
@@ -95,21 +104,22 @@ function TaskTable({ tasks, selected, setSelected, setRerender }) {
             ) : task.status === 'ONGOING' ? (
               <Button
                 variant='contained'
-                sx={{ minWidth: '80px' }}
+                sx={{ minWidth: '200px', fontFamily: 'OCR A Std, monospace' }}
                 color='error'
                 onClick={() => endTask(task.id)}
               >
                 End Task
               </Button>
             ) : (
-              <Button variant='contained' sx={{ minWidth: '80px' }} disabled>
+              <Button variant='contained' sx={{ minWidth: '200px', fontFamily: 'OCR A Std, monospace' }} disabled>
                 Completed
               </Button>
             )}
           </div>
         );
       },
-    },
+    }
+
   ];
 
   const deleteTask = (taskId) => {
