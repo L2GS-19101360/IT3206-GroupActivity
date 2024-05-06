@@ -71,6 +71,13 @@ function InputModal({ open, close, setRerender }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+  useEffect(() => {
+    if (!open) {
+      setTitle('');
+      setDescription('');
+    }
+  }, [open])
+
   const handleSubmit = async () => {
     try {
         const response = await axios.post('http://localhost:8080/api/tasks', {
@@ -90,7 +97,7 @@ function InputModal({ open, close, setRerender }) {
   return (
     <Modal open={open} onClose={close}>
       <ModalDialog sx={mdlContentStyle}>
-        <ModalClose variant='plain' sx={{ m: 1.2 }} />
+        <ModalClose variant='plain' sx={{ m: 1.2 }} onClick={close} />
         <div className='modal-header'>
           <h2>Add a new task</h2>
         </div>
