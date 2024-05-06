@@ -1,6 +1,7 @@
 import '../App.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { mdlContentStyle, mdlBtnStyle, inputStyle } from '../common/styles';
 import ModalClose from '@mui/joy/ModalClose';
 import Modal from '@mui/joy/Modal';
 import TextField from '@mui/material/TextField';
@@ -88,7 +89,7 @@ function InputModal({ open, close, setRerender }) {
 
   return (
     <Modal open={open} onClose={close}>
-      <ModalDialog sx={contentStyle}>
+      <ModalDialog sx={mdlContentStyle}>
         <ModalClose variant='plain' sx={{ m: 1.2 }} />
         <div className='modal-header'>
           <h2>Add a new task</h2>
@@ -99,19 +100,21 @@ function InputModal({ open, close, setRerender }) {
           <Stack spacing={3} mt={1}>
             <TextField
               label='Task Name'
-              variant='outlined'
+              variant='filled'
               value={title}
+              sx={inputStyle}
               onChange={(newTitle) => setTitle(newTitle.target.value)}
               required
             />
             <TextField
               label='Task Description'
-              variant='outlined'
+              variant='filled'
               value={description}
+              sx={inputStyle}
               onChange={(newDesc) => setDescription(newDesc.target.value)}
               required
             />
-            <Button variant='contained' onClick={handleSubmit} sx={modalButtonStyle}>
+            <Button variant='contained' onClick={handleSubmit} sx={mdlBtnStyle}>
               Submit
             </Button>
           </Stack>
@@ -124,29 +127,10 @@ const actionButtonStyle = {
   pl: '20px',
   pr: '20px',
   color: '#015901',
+  fontSize: '16px',
   borderRadius: 0,
   '&:hover': {
     backgroundColor: 'rgb(119, 221, 119, 0.4)',
     transition: '0s',
   },
-};
-
-const modalButtonStyle = {
-  padding: '6px',
-  fontFamily: 'OCR A Std, monospace',
-  letterSpacing: '1.5px',
-  backgroundColor: 'rgb(119, 221, 119)',
-  color: '#015901',
-  fontSize: '22px',
-  fontWeight: 'bolder',
-  '&:hover': {
-    backgroundColor: 'rgb(119, 221, 119, 0.8)',
-  }
-};
-
-const contentStyle = {
-  minWidth: 400,
-  borderRadius: 'md',
-  p: 3,
-  boxShadow: 'lg',
 };
