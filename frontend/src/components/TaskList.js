@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from './Header';
 import ActionBar from './ActionBar';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-import { TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 
 export default function TaskList() {
   const [taskArray, setTaskArray] = useState([]);
   const [selected, setSelected] = useState(null);
   const [rerender, setRerender] = useState(false);
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [search, setSearch] = useState('');
 
   const fetchTasks = async () => {
     try {
@@ -27,30 +26,17 @@ export default function TaskList() {
   }, [rerender]);
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
+    setSearch(event.target.value);
   };
 
-  const filteredTasks = taskArray.filter((task) => task.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredTasks = taskArray.filter((task) =>
+    task.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <>
       <div className='main-container'>
-        <Header />
-
-        <div className="search-bar">
-          <TextField
-            id="standard-basic"
-            label="Search Task"
-            variant="standard"
-            value={searchTerm}
-            onChange={handleSearch}
-            style={{ width: "1000px" }}
-          />
-          {/* <Button variant="contained" style={{ backgroundColor: "#015901" }} onClick={() => handleSearch()}>
-            Search
-          </Button> */}
-        </div>
-
+        <Header search={search} setSearch={handleSearch} taskList={taskArray} />
         <ActionBar setTaskArray={setTaskArray} setRerender={setRerender} />
         <TaskTable
           tasks={filteredTasks}
@@ -77,30 +63,30 @@ function TaskTable({ tasks, selected, setSelected, setRerender }) {
       headerName: 'Task Description',
       flex: 1,
       minWidth: 510,
-      headerAlign: 'center',
+      headerAlign: 'left',
       fontWeight: 'bold',
     },
     {
       field: 'status',
       headerName: 'Task Status',
       minWidth: 400,
-      headerAlign: 'left',
+      headerAlign: 'center',
       fontWeight: 'bold',
     },
     {
       field: 'action',
       headerName: 'Task Action',
       minWidth: 394,
-      headerAlign: 'left',
+      headerAlign: 'center',
       fontWeight: 'bold',
       renderCell: (params) => {
         const task = params.row;
-
         return (
           <div>
             {task.status === 'PENDING' ? (
               <Button
                 variant='contained'
+                sx={{ minWidth: '80px' }}
                 color='success'
                 onClick={() => startTask(task.id)}
               >
@@ -109,20 +95,21 @@ function TaskTable({ tasks, selected, setSelected, setRerender }) {
             ) : task.status === 'ONGOING' ? (
               <Button
                 variant='contained'
+                sx={{ minWidth: '80px' }}
                 color='error'
                 onClick={() => endTask(task.id)}
               >
                 End Task
               </Button>
             ) : (
-              <Button variant='contained' disabled>
+              <Button variant='contained' sx={{ minWidth: '80px' }} disabled>
                 Completed
               </Button>
             )}
           </div>
         );
-      }
-    }
+      },
+    },
   ];
 
   const deleteTask = (taskId) => {
@@ -169,9 +156,10 @@ function TaskTable({ tasks, selected, setSelected, setRerender }) {
         columns={columns}
         density='comfortable'
         sx={{
-          fontSize: '18px',
+          fontSize: '20px',
           fontFamily: 'OCR A Std, monospace',
           '.MuiDataGrid-columnHeader': {
+            fontWeight: 'bold',
             backgroundColor: '#77DD77',
           },
         }}
