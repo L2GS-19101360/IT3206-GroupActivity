@@ -12,7 +12,7 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import { MdAddCircleOutline } from 'react-icons/md';
 import { FiEdit3 } from 'react-icons/fi';
 
-export default function ActionBar({ selected, setRerender }) {
+export default function ActionBar({ selected, setRerender, handleSelectTasks }) {
   const [inputModal, showInputModal] = useState(false);
 
   return (
@@ -47,6 +47,7 @@ export default function ActionBar({ selected, setRerender }) {
           <Button
             variant='text'
             sx={actionButtonStyle}
+            onClick={() => handleSelectTasks()}
             startIcon={
               <RiDeleteBinLine
                 style={{ paddingLeft: '2px', paddingRight: '2px' }}
@@ -80,17 +81,17 @@ function InputModal({ open, close, setRerender }) {
 
   const handleSubmit = async () => {
     try {
-        const response = await axios.post('http://localhost:8080/api/tasks', {
-            title: title,
-            description: description
-        });
-        setTitle('');
-        setDescription('');
-        console.log('Task created successfully');
-        setRerender(prev => !prev);
-        close();
+      const response = await axios.post('http://localhost:8080/api/tasks', {
+        title: title,
+        description: description
+      });
+      setTitle('');
+      setDescription('');
+      console.log('Task created successfully');
+      setRerender(prev => !prev);
+      close();
     } catch (error) {
-        console.error('Error creating task:', error);
+      console.error('Error creating task:', error);
     }
   }
 
@@ -104,27 +105,27 @@ function InputModal({ open, close, setRerender }) {
         <div className='modal-content'>
           <text>Fill out the necessary details for this task.</text>
         </div>
-          <Stack spacing={3} mt={1}>
-            <TextField
-              label='Task Name'
-              variant='filled'
-              value={title}
-              sx={inputStyle}
-              onChange={(newTitle) => setTitle(newTitle.target.value)}
-              required
-            />
-            <TextField
-              label='Task Description'
-              variant='filled'
-              value={description}
-              sx={inputStyle}
-              onChange={(newDesc) => setDescription(newDesc.target.value)}
-              required
-            />
-            <Button variant='contained' onClick={handleSubmit} sx={mdlBtnStyle}>
-              Submit
-            </Button>
-          </Stack>
+        <Stack spacing={3} mt={1}>
+          <TextField
+            label='Task Name'
+            variant='filled'
+            value={title}
+            sx={inputStyle}
+            onChange={(newTitle) => setTitle(newTitle.target.value)}
+            required
+          />
+          <TextField
+            label='Task Description'
+            variant='filled'
+            value={description}
+            sx={inputStyle}
+            onChange={(newDesc) => setDescription(newDesc.target.value)}
+            required
+          />
+          <Button variant='contained' onClick={handleSubmit} sx={mdlBtnStyle}>
+            Submit
+          </Button>
+        </Stack>
       </ModalDialog>
     </Modal>
   );
