@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from './Header';
 import ActionBar from './ActionBar';
@@ -33,23 +33,6 @@ export default function TaskList() {
     task.title.toLowerCase().includes(search.toLowerCase())
   );
 
-  return (
-    <>
-      <div className='main-container'>
-        <Header search={search} setSearch={handleSearch} taskList={taskArray} />
-        <ActionBar setTaskArray={setTaskArray} setRerender={setRerender} />
-        <TaskTable
-          tasks={filteredTasks}
-          selected={selected}
-          setSelected={setSelected}
-          setRerender={setRerender}
-        />
-      </div>
-    </>
-  );
-}
-
-function TaskTable({ tasks, selected, setSelected, setRerender }) {
   const columns = [
     {
       field: 'title',
@@ -157,33 +140,71 @@ function TaskTable({ tasks, selected, setSelected, setRerender }) {
       });
   };
 
+  const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
+
+  const handleSelectTasks = () => {
+    console.log(rowSelectionModel)
+
+    const data = {
+      taskIds: rowSelectionModel
+    }
+
+    axios.post(
+      'http://localhost:8080/api/tasks/deleteMultipleTasks', data
+    ).then(
+      (response) => {
+        setRerender((prev) => !prev);
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   return (
-    <Box
-      sx={{ height: 500, width: '100%', display: 'flex', marginTop: '10px' }}
-    >
-      <DataGrid
-        rows={tasks}
-        columns={columns}
-        density='comfortable'
-        sx={{
-          fontSize: '20px',
-          fontFamily: 'OCR A Std, monospace',
-          '.MuiDataGrid-columnHeader': {
-            fontWeight: 'bold',
-            backgroundColor: '#77DD77',
-          },
-        }}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
-        checkboxSelection
-        disableRowSelectionOnClick
-      />
-    </Box>
+    <>
+      <div className='main-container'>
+        <Header search={search} setSearch={handleSearch} taskList={taskArray} />
+        <ActionBar setTaskArray={setTaskArray} setRerender={setRerender} handleSelectTasks={handleSelectTasks} />
+        {/* <TaskTable
+          tasks={filteredTasks}
+          selected={selected}
+          setSelected={setSelected}
+          setRerender={setRerender}
+        /> */}
+        <Box
+          sx={{ height: 500, width: '100%', display: 'flex', marginTop: '10px' }}
+        >
+          <DataGrid
+            rows={filteredTasks}
+            columns={columns}
+            density='comfortable'
+            sx={{
+              fontSize: '20px',
+              fontFamily: 'OCR A Std, monospace',
+              '.MuiDataGrid-columnHeader': {
+                fontWeight: 'bold',
+                backgroundColor: '#77DD77',
+              },
+            }}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 5,
+                },
+              },
+            }}
+            pageSizeOptions={[5]}
+            checkboxSelection
+            disableRowSelectionOnClick
+            onRowSelectionModelChange={(newRowSelectionModel) => {
+              setRowSelectionModel(newRowSelectionModel);
+            }}
+            rowSelectionModel={rowSelectionModel}
+          />
+        </Box>
+      </div>
+    </>
   );
 }
