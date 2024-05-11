@@ -12,8 +12,32 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import { MdAddCircleOutline } from 'react-icons/md';
 import { FiEdit3 } from 'react-icons/fi';
 
-export default function ActionBar({ selected, setRerender, handleSelectTasks }) {
+export default function ActionBar({ selected, setRerender, handleSelectTasks, setSelectedTaskArray }) {
   const [inputModal, showInputModal] = useState(false);
+
+  const handleUpdateTask = () => {
+    console.log(setSelectedTaskArray)
+  }
+
+  const handleDeleteTask = () => {
+    console.log(setSelectedTaskArray)
+
+    const data = {
+      taskIds: setSelectedTaskArray
+    }
+
+    axios.post(
+      'http://localhost:8080/api/tasks/deleteMultipleTasks', data
+    ).then(
+      (response) => {
+        setRerender((prev) => !prev);
+      }
+    ).catch(
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   return (
     <>
@@ -36,6 +60,8 @@ export default function ActionBar({ selected, setRerender, handleSelectTasks }) 
           <Button
             variant='text'
             sx={actionButtonStyle}
+            disabled={setSelectedTaskArray.length === 0 || setSelectedTaskArray.length > 1}
+            onClick={() => handleUpdateTask()}
             startIcon={
               <FiEdit3 style={{ paddingLeft: '2px', paddingRight: '2px' }} />
             }
@@ -47,7 +73,8 @@ export default function ActionBar({ selected, setRerender, handleSelectTasks }) 
           <Button
             variant='text'
             sx={actionButtonStyle}
-            onClick={() => handleSelectTasks()}
+            disabled={setSelectedTaskArray.length === 0}
+            onClick={() => handleDeleteTask()}
             startIcon={
               <RiDeleteBinLine
                 style={{ paddingLeft: '2px', paddingRight: '2px' }}

@@ -142,31 +142,11 @@ export default function TaskList() {
 
   const [rowSelectionModel, setRowSelectionModel] = React.useState([]);
 
-  const handleSelectTasks = () => {
-    console.log(rowSelectionModel)
-
-    const data = {
-      taskIds: rowSelectionModel
-    }
-
-    axios.post(
-      'http://localhost:8080/api/tasks/deleteMultipleTasks', data
-    ).then(
-      (response) => {
-        setRerender((prev) => !prev);
-      }
-    ).catch(
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
   return (
     <>
       <div className='main-container'>
         <Header search={search} setSearch={handleSearch} taskList={taskArray} />
-        <ActionBar setTaskArray={setTaskArray} setRerender={setRerender} handleSelectTasks={handleSelectTasks} />
+        <ActionBar setTaskArray={setTaskArray} setRerender={setRerender} setSelectedTaskArray={rowSelectionModel} />
         {/* <TaskTable
           tasks={filteredTasks}
           selected={selected}
