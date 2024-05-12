@@ -14,10 +14,7 @@ import { FiEdit3 } from 'react-icons/fi';
 
 export default function ActionBar({ selected, setRerender, handleSelectTasks, setSelectedTaskArray }) {
   const [inputModal, showInputModal] = useState(false);
-
-  const handleUpdateTask = () => {
-    console.log(setSelectedTaskArray)
-  }
+  const [editModal, showEditModal] = useState(false);
 
   const handleDeleteTask = () => {
     console.log(setSelectedTaskArray)
@@ -61,7 +58,7 @@ export default function ActionBar({ selected, setRerender, handleSelectTasks, se
             variant='text'
             sx={actionButtonStyle}
             disabled={setSelectedTaskArray.length === 0 || setSelectedTaskArray.length > 1}
-            onClick={() => handleUpdateTask()}
+            onClick={() => showEditModal(true)}
             startIcon={
               <FiEdit3 style={{ paddingLeft: '2px', paddingRight: '2px' }} />
             }
@@ -91,7 +88,74 @@ export default function ActionBar({ selected, setRerender, handleSelectTasks, se
       />
       {/* Input Modal */}
       <InputModal open={inputModal} close={() => showInputModal(false)} setRerender={setRerender} />
+      {/* Edit Modal */}
+      <EditModal open={editModal} close={() => showEditModal(false)} setRerender={setRerender} toUpdateTask={setSelectedTaskArray[0]}/>
     </>
+  );
+}
+
+function EditModal({ open, close, setRerender, toUpdateTask }) {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    if (!open) {
+      setTitle('');
+      setDescription('');
+    }
+  }, [open])
+
+  const handleSubmit = async () => {
+    console.log(toUpdateTask)
+
+    try {
+      const response = await axios.put(`http://localhost:8080/api/tasks/${toUpdateTask}`, {
+        title: title,
+        description: description
+      });
+      setTitle('');
+      setDescription('');
+      console.log('Task updated successfully');
+      setRerender(prev => !prev);
+      close();
+    } catch (error) {
+      console.error('Error creating task:', error);
+    }
+  }
+
+  return (
+    <Modal open={open} onClose={close}>
+      <ModalDialog sx={mdlContentStyle}>
+        <ModalClose variant='plain' sx={{ m: 1.2 }} onClick={close} />
+        <div className='modal-header'>
+          <h2>Edit a new task</h2>
+        </div>
+        <div className='modal-content'>
+          <text>Fill out the necessary details for this task.</text>
+        </div>
+        <Stack spacing={3} mt={1}>
+          <TextField
+            label='Task Name'
+            variant='filled'
+            value={title}
+            sx={inputStyle}
+            onChange={(newTitle) => setTitle(newTitle.target.value)}
+            required
+          />
+          <TextField
+            label='Task Description'
+            variant='filled'
+            value={description}
+            sx={inputStyle}
+            onChange={(newDesc) => setDescription(newDesc.target.value)}
+            required
+          />
+          <Button variant='contained' onClick={handleSubmit} sx={mdlBtnStyle}>
+            Submit
+          </Button>
+        </Stack>
+      </ModalDialog>
+    </Modal>
   );
 }
 
