@@ -11,6 +11,7 @@ import { Divider, Button } from "@mui/material";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdAddCircleOutline } from "react-icons/md";
 import { FiEdit3 } from "react-icons/fi";
+import NotifSnackbar from './Snackbar';
 
 export default function ActionBar({
   selected,
@@ -20,10 +21,9 @@ export default function ActionBar({
 }) {
   const [inputModal, showInputModal] = useState(false);
   const [editModal, showEditModal] = useState(false);
+  const [snackbarInfo, setSnackbarInfo] = useState({ open: false, message: '', severity: '' });
 
   const handleDeleteTask = () => {
-    console.log(setSelectedTaskArray);
-
     const data = {
       taskIds: setSelectedTaskArray,
     };
@@ -32,10 +32,27 @@ export default function ActionBar({
       .post("http://localhost:8080/api/tasks/deleteMultipleTasks", data)
       .then((response) => {
         setRerender((prev) => !prev);
+        setSnackbarInfo({
+          open: true,
+          message: "Task(s) deleted successfully!",
+          severity: "warning",
+        });
       })
       .catch((error) => {
         console.log(error);
+        setSnackbarInfo({
+          open: true,
+          message: "Error deleting task(s).",
+          severity: "error",
+        });
       });
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarInfo({ ...snackbarInfo, open: false });
   };
 
   return (
@@ -65,7 +82,8 @@ export default function ActionBar({
             }
             onClick={() => showEditModal(true)}
             startIcon={
-              <FiEdit3 style={{ paddingLeft: "2px", paddingRight: "2px" }} />
+              <FiEdit3 style={{ paddingLeft: "2px", paddingRight: "2px" }}
+              />
             }
           >
             Edit the task
@@ -96,6 +114,7 @@ export default function ActionBar({
         open={inputModal}
         close={() => showInputModal(false)}
         setRerender={setRerender}
+        setSnackbarInfo={setSnackbarInfo}
       />
       {/* Edit Modal */}
       <EditModal
@@ -103,12 +122,18 @@ export default function ActionBar({
         close={() => showEditModal(false)}
         setRerender={setRerender}
         toUpdateTask={setSelectedTaskArray[0]}
+        setSnackbarInfo={setSnackbarInfo}
+      />
+      {/* Snackbar */}
+      <NotifSnackbar
+        snackbarInfo={snackbarInfo}
+        handleCloseSnackbar={handleCloseSnackbar}
       />
     </>
   );
 }
 
-function EditModal({ open, close, setRerender, toUpdateTask }) {
+function EditModal({ open, close, setRerender, toUpdateTask, setSnackbarInfo }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -153,9 +178,19 @@ function EditModal({ open, close, setRerender, toUpdateTask }) {
       setRerender((prev) => !prev);
       setTitle("");
       setDescription("");
+      setSnackbarInfo({
+        open: true,
+        message: `Task "${title}" updated!`,
+        severity: 'info',
+      });
       close();
     } catch (error) {
-      console.error("Error creating task:", error);
+      console.error("Error updating task:", error);
+      setSnackbarInfo({
+        open: true,
+        message: 'Error updating task.',
+        severity: 'error',
+      });
     }
   };
 
@@ -164,7 +199,7 @@ function EditModal({ open, close, setRerender, toUpdateTask }) {
       <ModalDialog sx={mdlContentStyle}>
         <ModalClose variant="plain" sx={{ m: 1.2 }} onClick={close} />
         <div className="modal-header">
-          <h2>Edit a new task</h2>
+          <h2>Edit a task</h2>
         </div>
         <div className="modal-content">
           <p>Fill out the necessary details for this task.</p>
@@ -195,7 +230,7 @@ function EditModal({ open, close, setRerender, toUpdateTask }) {
   );
 }
 
-function InputModal({ open, close, setRerender }) {
+function InputModal({ open, close, setRerender, setSnackbarInfo }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -216,9 +251,19 @@ function InputModal({ open, close, setRerender }) {
       setDescription("");
       console.log("Task created successfully");
       setRerender((prev) => !prev);
+      setSnackbarInfo({
+        open: true,
+        message: `Task "${title}" created successfully!`,
+        severity: 'success',
+      });
       close();
     } catch (error) {
       console.error("Error creating task:", error);
+      setSnackbarInfo({
+        open: true,
+        message: 'Error creating task!',
+        severity: 'error',
+      });
     }
   };
 
