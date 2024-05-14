@@ -146,11 +146,13 @@ function EditModal({ open, close, setRerender, toUpdateTask }) {
       console.log("Payload:", payload);
 
       await axios.put(
-        `http://localhost:8080/api/tasks/${toUpdateTask.id}`,
+        `http://localhost:8080/api/tasks/${toUpdateTask}`,
         payload
       );
       console.log("Task updated successfully");
       setRerender((prev) => !prev);
+      setTitle("");
+      setDescription("");
       close();
     } catch (error) {
       console.error("Error creating task:", error);
