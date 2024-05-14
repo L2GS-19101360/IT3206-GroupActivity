@@ -5,22 +5,25 @@ import ActionBar from './ActionBar';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import NotifSnackbar from './Snackbar';
 
-// Define MyComponent outside TaskList component
-const MyComponent = ({ startTask, endTask, task, setOpen }) => {
-  const handleButtonClick = () => {
+const SnackbarEvent = ({ startTask, endTask, task, setSnackbarInfo }) => {
+  const handleStartClick = () => {
     startTask(task.id);
-    setOpen({ open: true, title: task.title }); // Open Snackbar when task starts and pass the task title
+    setSnackbarInfo({ open: true, message: `Task "${task.title}" started!`, severity: 'success' });
   };
-  
+
+  const handleEndClick = () => {
+    endTask(task.id);
+    setSnackbarInfo({ open: true, message: `Task "${task.title}" ended!`, severity: 'info' });
+  };
+
   return (
     <Button
       variant='contained'
       sx={{ minWidth: '200px', fontFamily: 'OCR A Std, monospace' }}
       color={task.status === 'PENDING' ? 'success' : 'error'}
-      onClick={task.status === 'PENDING' ? handleButtonClick : () => endTask(task.id)}
+      onClick={task.status === 'PENDING' ? handleStartClick : handleEndClick}
       disabled={task.status === 'COMPLETED'}
     >
       {task.status === 'PENDING' ? 'Start Task' : 'End Task'}
@@ -32,7 +35,7 @@ export default function TaskList() {
   const [taskArray, setTaskArray] = useState([]);
   const [rerender, setRerender] = useState(false);
   const [search, setSearch] = useState('');
-  const [snackbarInfo, setSnackbarInfo] = useState({ open: false, title: '' });
+  const [snackbarInfo, setSnackbarInfo] = useState({ open: false, message: '', severity: '' });
 
   const fetchTasks = async () => {
     try {
@@ -140,11 +143,11 @@ export default function TaskList() {
         const task = params.row;
         return (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-            <MyComponent
+            <SnackbarEvent
               startTask={startTask}
               endTask={endTask}
               task={task}
-              setOpen={setSnackbarInfo}
+              setSnackbarInfo={setSnackbarInfo}
             />
           </div>
         );
@@ -188,18 +191,10 @@ export default function TaskList() {
             rowSelectionModel={rowSelectionModel}
           />
         </Box>
-        {/* Snackbar component */}
-        <Snackbar open={snackbarInfo.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-          <MuiAlert
-            autoHideDuration={5000}
-            onClose={handleCloseSnackbar}
-            severity="info"
-            variant="filled"
-            sx={{ width: '100%' }}
-          >
-            {`Task "${snackbarInfo.title}" started!`} {/* Display the title of the task */}
-          </MuiAlert>
-        </Snackbar>
+        <NotifSnackbar
+          snackbarInfo={snackbarInfo}
+          handleCloseSnackbar={handleCloseSnackbar}
+        />
       </div>
     </>
   );
