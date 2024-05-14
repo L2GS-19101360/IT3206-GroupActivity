@@ -9,6 +9,12 @@ h3 {
   font-weight: bold;
 }
 
+p {
+  font-size: 16px;
+  font-family: OCR A Std, monospace;
+  font-weight: bold;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -33,7 +39,7 @@ h3 {
   position: sticky;
   align-items: center;
   flex-direction: row;
-  background-color: #77DD77;
+  background-color: #77dd77;
   box-shadow: 4px 2px 2px #0000;
   width: 100%;
   min-height: 10%;
@@ -99,8 +105,8 @@ h3 {
 }
 
 .table-header {
-  background-color:#77DD77; 
-  color: #015901; 
-  font-weight: bold; 
+  background-color: #77dd77;
+  color: #015901;
+  font-weight: bold;
   border-bottom: 2px solid #ccc;
 }
