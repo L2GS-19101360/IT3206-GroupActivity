@@ -15,7 +15,7 @@ const SnackbarEvent = ({ startTask, endTask, task, setSnackbarInfo }) => {
 
   const handleEndClick = () => {
     endTask(task.id);
-    setSnackbarInfo({ open: true, message: `Task "${task.title}" ended!`, severity: 'info' });
+    setSnackbarInfo({ open: true, message: `Task "${task.title}" ended!`, severity: 'error' });
   };
 
   return (

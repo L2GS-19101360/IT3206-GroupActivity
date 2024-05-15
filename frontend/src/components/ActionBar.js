@@ -35,7 +35,7 @@ export default function ActionBar({
         setSnackbarInfo({
           open: true,
           message: "Task(s) deleted successfully!",
-          severity: "warning",
+          severity: "error",
         });
       })
       .catch((error) => {
@@ -181,7 +181,7 @@ function EditModal({ open, close, setRerender, toUpdateTask, setSnackbarInfo }) 
       setSnackbarInfo({
         open: true,
         message: `Task "${title}" updated!`,
-        severity: 'info',
+        severity: 'warning',
       });
       close();
     } catch (error) {
