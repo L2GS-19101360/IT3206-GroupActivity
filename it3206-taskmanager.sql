@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2024 at 09:36 AM
+-- Generation Time: May 15, 2024 at 04:15 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,11 +39,16 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`id`, `title`, `description`, `status`) VALUES
-(1, 'Wash Clothes', 'Sort laundry, start the washing machine, and hang clothes to dry.', 'PENDING'),
-(2, 'Buy Groceries', 'Make a list of essential items, visit the grocery store, and purchase fruits, vegetables, and other household necessities.', 'PENDING'),
-(3, 'Clean the House', 'Vacuum floors, dust surfaces, and clean bathrooms to maintain a tidy living space.', 'PENDING'),
-(4, 'Pay Bills', 'Review utility bills and other expenses, and make payments online or by mail to stay on top of finances.', 'PENDING'),
-(5, 'Exercise', 'Go for a run, attend a yoga class, or do a workout at home to stay active and healthy.', 'PENDING');
+(41, 'Home Movie Marathon', 'Host a movie marathon at home featuring a series of your favorite films or TV shows. ', 'COMPLETED'),
+(47, 'Volunteer at an Animal Shelter', 'Spend time volunteering at an animal shelter to help care for and socialize shelter animals. ', 'COMPLETED'),
+(51, 'Volunteer at a Local Charity', 'Give back to your community by volunteering your time at a local charity or nonprofit organization.', 'ONGOING'),
+(64, 'Backyard Camping', 'Pitch a tent, light a campfire, and enjoy outdoor activities like stargazing, storytelling, and roasting marshmallows. ', 'COMPLETED'),
+(70, 'Online Language Exchange', 'Participate in an online language exchange to practice a foreign language with native speakers. Platforms like Tandem or HelloTalk connect you with language partners from around the world, ', 'ONGOING'),
+(72, 'Buy Apples', 'Go to Store, Pay Apples, Eat Apples', 'PENDING'),
+(73, 'Virtual Art Class', 'Take an online art class to learn new techniques in drawing, painting, or digital art.', 'COMPLETED'),
+(75, 'Virtual Photography Club', 'Start or join a virtual photography club to share your photos and get feedback from other enthusiasts.', 'PENDING'),
+(76, 'Online Dance Class', 'Take an online dance class to learn new moves and stay active. ', 'PENDING'),
+(77, 'Virtual Cooking Competition', 'Choose a theme or specific ingredients, and have everyone cook their dish while video chatting. ', 'ONGOING');
 
 --
 -- Indexes for dumped tables
@@ -63,7 +68,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
