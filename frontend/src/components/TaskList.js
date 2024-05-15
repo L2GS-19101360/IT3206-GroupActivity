@@ -37,9 +37,14 @@ export default function TaskList() {
   const [search, setSearch] = useState('');
   const [snackbarInfo, setSnackbarInfo] = useState({ open: false, message: '', severity: '' });
 
+  const apiLinks = [
+    'https://it3206-groupactivity-api.onrender.com/api/tasks',
+    'http://localhost:8080/api/tasks/'
+  ]
+
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/tasks/');
+      const response = await axios.get(apiLinks[0]);
       setTaskArray(response.data.data);
     } catch (error) {
       console.log(error);
@@ -59,8 +64,13 @@ export default function TaskList() {
   );
 
   const deleteTask = (taskId) => {
+    const apiLinks = [
+      `https://it3206-groupactivity-api.onrender.com/api/tasks/${taskId}`,
+      `http://localhost:8080/api/tasks/${taskId}`
+    ]
+
     axios
-      .delete(`http://localhost:8080/api/tasks/${taskId}`)
+      .delete(apiLinks[0])
       .then((response) => {
         console.log(response);
         setRerender((prev) => !prev);
@@ -71,8 +81,13 @@ export default function TaskList() {
   };
 
   const startTask = (taskId) => {
+    const apiLinks = [
+      `https://it3206-groupactivity-api.onrender.com/api/tasks/startTask/${taskId}`,
+      `http://localhost:8080/api/tasks/startTask/${taskId}`
+    ]
+
     axios
-      .put(`http://localhost:8080/api/tasks/startTask/${taskId}`)
+      .put(apiLinks[0])
       .then((response) => {
         setRerender((prev) => !prev);
       })
@@ -83,8 +98,13 @@ export default function TaskList() {
   };
 
   const endTask = (taskId) => {
+    const apiLinks = [
+      `https://it3206-groupactivity-api.onrender.com/api/tasks/finishTask/${taskId}`,
+      `http://localhost:8080/api/tasks/finishTask/${taskId}`
+    ]
+
     axios
-      .put(`http://localhost:8080/api/tasks/finishTask/${taskId}`)
+      .put(apiLinks[0])
       .then((response) => {
         setRerender((prev) => !prev);
       })

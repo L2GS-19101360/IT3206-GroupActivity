@@ -24,12 +24,17 @@ export default function ActionBar({
   const [snackbarInfo, setSnackbarInfo] = useState({ open: false, message: '', severity: '' });
 
   const handleDeleteTask = () => {
+    const apiLinks = [
+      `https://it3206-groupactivity-api.onrender.com/api/tasks/deleteMultipleTasks`,
+      `http://localhost:8080/api/tasks/deleteMultipleTasks`
+    ]
+
     const data = {
       taskIds: setSelectedTaskArray,
     };
 
     axios
-      .post("http://localhost:8080/api/tasks/deleteMultipleTasks", data)
+      .post(apiLinks[0], data)
       .then((response) => {
         setRerender((prev) => !prev);
         setSnackbarInfo({
@@ -138,13 +143,18 @@ function EditModal({ open, close, setRerender, toUpdateTask, setSnackbarInfo }) 
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const apiLinks = [
+    `https://it3206-groupactivity-api.onrender.com/api/tasks/taskId/${toUpdateTask}`,
+    `http://localhost:8080/api/tasks/taskId/${toUpdateTask}`
+  ]
+
   useEffect(() => {
     if (open && toUpdateTask) {
       const fetchTaskData = async () => {
         setLoading(true);
         try {
           const response = await axios.get(
-            `http://localhost:8080/api/tasks/taskId/${toUpdateTask}`
+            apiLinks[0]
           );
 
           const taskData = response.data.data[0];
@@ -166,12 +176,17 @@ function EditModal({ open, close, setRerender, toUpdateTask, setSnackbarInfo }) 
   }, [open, toUpdateTask]);
 
   const handleSubmit = async () => {
+    const apiLinks = [
+    `https://it3206-groupactivity-api.onrender.com/api/tasks/${toUpdateTask}`,
+    `http://localhost:8080/api/tasks/${toUpdateTask}`
+  ]
+
     try {
       const payload = { title, description };
       console.log("Payload:", payload);
 
       await axios.put(
-        `http://localhost:8080/api/tasks/${toUpdateTask}`,
+        apiLinks[0],
         payload
       );
       console.log("Task updated successfully");
@@ -242,8 +257,13 @@ function InputModal({ open, close, setRerender, setSnackbarInfo }) {
   }, [open]);
 
   const handleSubmit = async () => {
+    const apiLinks = [
+      `https://it3206-groupactivity-api.onrender.com/api/tasks`,
+      `http://localhost:8080/api/tasks`
+    ]
+
     try {
-      const response = await axios.post("http://localhost:8080/api/tasks", {
+      const response = await axios.post(apiLinks[0], {
         title: title,
         description: description,
       });
